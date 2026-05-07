@@ -500,6 +500,148 @@
   .pin-input:focus { border-color: var(--accent); }
   .pin-error { font-size: 12px; color: var(--accent); margin-top: 8px; display: none; }
 
+
+  /* ── DISC BLOCK ── */
+  .disc-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .disc-section-title em { font-style: italic; color: var(--accent); }
+  .disc-intro {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Preferência — grade de opções */
+  .pref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .pref-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .pref-item input[type="radio"] { display: none; }
+  .pref-item input[type="radio"]:checked + label {
+    border-color: var(--gold);
+    background: rgba(184,134,42,0.06);
+  }
+  .pref-item label:hover { border-color: #ccc; background: var(--surface2); }
+  .pref-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-d { background: #E8401C; }
+  .dot-i { background: #F59E0B; }
+  .dot-s { background: #22C55E; }
+  .dot-c { background: #3B82F6; }
+
+  /* Gráfico DISC no relatório */
+  .disc-chart {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .disc-chart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .disc-bars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: end;
+    height: 140px;
+    margin-bottom: 12px;
+  }
+  .disc-bar-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 6px;
+  }
+  .disc-bar-visual {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 1s ease;
+    min-height: 4px;
+  }
+  .bar-col-d .disc-bar-visual { background: #E8401C; }
+  .bar-col-i .disc-bar-visual { background: #F59E0B; }
+  .bar-col-s .disc-bar-visual { background: #22C55E; }
+  .bar-col-c .disc-bar-visual { background: #3B82F6; }
+  .disc-bar-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+  }
+  .label-d { color: #E8401C; }
+  .label-i { color: #F59E0B; }
+  .label-s { color: #22C55E; }
+  .label-c { color: #3B82F6; }
+  .disc-bar-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .disc-profile-line {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+  .disc-profile-line strong { color: var(--jet); }
+
+  /* Bloco de progresso DISC */
+  .disc-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .disc-prog-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+  .disc-prog-dot.active { background: var(--gold); }
+  .disc-prog-dot.done { background: #22c55e; }
+
+  @media (max-width: 600px) {
+    .pref-grid { grid-template-columns: 1fr; }
+    .disc-bars { height: 100px; }
+  }
+
   @media (max-width: 600px) {
     .info-grid { grid-template-columns: 1fr; }
     .top-bar { padding: 12px 20px; }
@@ -595,11 +737,11 @@
       <p class="thanks-sub">Suas respostas foram recebidas e estão sendo analisadas pela equipe de recrutamento da JET. Em breve entraremos em contato pelo e-mail informado.</p>
     </div>
 
-    <div class="recruiter-gate">
+    <div class="recruiter-gate" id="recruiter-gate" style="display:none;">
       <h3>Acesso do Recrutador</h3>
       <p>Digite o PIN para visualizar a avaliação completa deste candidato.</p>
       <div class="pin-row">
-        <input class="pin-input" id="pin-input" type="password" placeholder="PIN" maxlength="6">
+        <input class="pin-input" id="pin-input" type="text" placeholder="jet2026" maxlength="10" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
         <button class="btn btn-primary" onclick="checkPin()">Entrar</button>
       </div>
       <div class="pin-error" id="pin-error">PIN incorreto. Tente novamente.</div>
@@ -732,11 +874,227 @@ const QUESTIONS = [
   }
 ];
 
+
+const DISC_QUESTIONS = [
+  // SITUACIONAIS
+  {
+    id: "d1",
+    type: "situacional",
+    text: "Você está gerenciando a escala de 5 cidades ao mesmo tempo e percebe que duas delas estão com risco de não atingir a meta. Como você reage?",
+    options: [
+      { text: "Age imediatamente: liga para os responsáveis, cobra soluções e define prazo para retorno", dim: "D" },
+      { text: "Mobiliza a equipe com energia positiva, motiva os líderes e busca voluntários para cobrir", dim: "I" },
+      { text: "Analisa com calma a situação, segue o processo estabelecido e aciona quem deve ser acionado", dim: "S" },
+      { text: "Mapeia os dados, verifica o histórico das cidades e apresenta um plano detalhado antes de agir", dim: "C" }
+    ]
+  },
+  {
+    id: "d2",
+    type: "situacional",
+    text: "Um agente está com dificuldade para aceitar a sugestão de NF no ContrataPJ e já enviou 3 mensagens sem resolver. O que você faz?",
+    options: [
+      { text: "Resolve o problema de forma direta e rápida — explica o passo a passo de forma objetiva e cobra confirmação", dim: "D" },
+      { text: "Chama o agente para uma conversa, explica com paciência e garante que ele se sinta apoiado", dim: "I" },
+      { text: "Segue o fluxo padrão de suporte com cuidado, verificando cada etapa para não gerar mais confusão", dim: "S" },
+      { text: "Verifica o histórico da conta, consulta a documentação da plataforma e identifica a causa raiz", dim: "C" }
+    ]
+  },
+  {
+    id: "d3",
+    type: "situacional",
+    text: "Você tem 3 tarefas urgentes para concluir antes das 17h e surge uma quarta. O que você faz?",
+    options: [
+      { text: "Prioriza sem hesitar, delega o que dá, e faz o que é mais crítico para a operação", dim: "D" },
+      { text: "Comunica a situação para o time, pede ajuda e tenta resolver em colaboração", dim: "I" },
+      { text: "Avalia calmamente o impacto de cada tarefa, reorganiza a sequência e cumpre o que é possível", dim: "S" },
+      { text: "Cria uma lista detalhada, estima o tempo de cada tarefa e define um plano realista", dim: "C" }
+    ]
+  },
+  {
+    id: "d4",
+    type: "situacional",
+    text: "A JET implementa uma nova plataforma substituindo uma que você dominava. Como você reage?",
+    options: [
+      { text: "Aprende rápido o essencial e começa a usar logo — erros fazem parte da adaptação", dim: "D" },
+      { text: "Fica animado com o novo, compartilha com colegas e aprende junto com o time", dim: "I" },
+      { text: "Dedica tempo para estudar bem antes de usar, prefere segurança a velocidade", dim: "S" },
+      { text: "Lê toda a documentação, testa em modo de treinamento e só opera quando tem confiança plena", dim: "C" }
+    ]
+  },
+  // PREFERÊNCIA
+  {
+    id: "d5",
+    type: "preferencia",
+    text: "Das opções abaixo, qual palavra descreve melhor como você tende a agir no trabalho?",
+    options: [
+      { text: "Decisivo", dim: "D" },
+      { text: "Entusiasmado", dim: "I" },
+      { text: "Paciente", dim: "S" },
+      { text: "Preciso", dim: "C" }
+    ]
+  },
+  {
+    id: "d6",
+    type: "preferencia",
+    text: "Como você prefere receber feedback sobre o seu trabalho?",
+    options: [
+      { text: "Direto e rápido — só o essencial, sem rodeios", dim: "D" },
+      { text: "Com reconhecimento do esforço, mesmo que haja pontos a melhorar", dim: "I" },
+      { text: "Com calma, num momento reservado e de forma gentil", dim: "S" },
+      { text: "Detalhado, com exemplos concretos e dados que fundamentem", dim: "C" }
+    ]
+  },
+  {
+    id: "d7",
+    type: "preferencia",
+    text: "O que mais te motiva no trabalho do dia a dia?",
+    options: [
+      { text: "Superar metas e resolver desafios com autonomia", dim: "D" },
+      { text: "Trabalhar com pessoas, criar conexões e ter um ambiente animado", dim: "I" },
+      { text: "Ter rotina previsível, contribuir com estabilidade e fazer parte de um time coeso", dim: "S" },
+      { text: "Trabalhar com qualidade, seguir processos bem definidos e entregar com excelência", dim: "C" }
+    ]
+  },
+  {
+    id: "d8",
+    type: "preferencia",
+    text: "Quando você precisa tomar uma decisão importante rapidamente, você tende a:",
+    options: [
+      { text: "Decidir com base na intuição e experiência — depois ajusta se necessário", dim: "D" },
+      { text: "Consultar pessoas próximas antes de decidir", dim: "I" },
+      { text: "Pensar bem antes de agir, mesmo que demore um pouco mais", dim: "S" },
+      { text: "Coletar o máximo de informações disponíveis antes de qualquer decisão", dim: "C" }
+    ]
+  }
+];
+
+let discAnswers = {};
+let currentDisc = 0;
+
 // ── ESTADO ──────────────────────────────────────────────────────────────────
 let currentQ = 0;
 let answers = {};
 let candidateData = {};
 let evaluationResult = null;
+
+
+// ── DISC FUNCTIONS ───────────────────────────────────────────────────────────
+function showDiscQuestion(idx) {
+  const existingScreen = document.getElementById(`screen-disc-${idx}`);
+  if (!existingScreen) buildDiscScreen(idx);
+  showScreen(`screen-disc-${idx}`);
+  document.getElementById('step-label').textContent = `Perfil comportamental ${idx + 1} de ${DISC_QUESTIONS.length}`;
+  updateDiscDots(idx);
+  currentDisc = idx;
+}
+
+function buildDiscScreen(idx) {
+  const q = DISC_QUESTIONS[idx];
+  const screen = document.createElement('div');
+  screen.className = 'screen';
+  screen.id = `screen-disc-${idx}`;
+
+  const letters = ['A','B','C','D'];
+  const isLast = idx === DISC_QUESTIONS.length - 1;
+
+  let inner = `
+    <div class="intro-tag" style="color:var(--gold)">Bloco 1 · Perfil Comportamental</div>
+    <h2 class="disc-section-title">Questão <em>${idx + 1}</em> de ${DISC_QUESTIONS.length}</h2>
+    <div class="disc-intro">
+      ${q.type === 'situacional' ? '🎯 Situação prática — escolha a opção que mais se aproxima de como você agiria.' : '💭 Preferência pessoal — escolha a opção com que mais se identifica.'}
+    </div>
+    <div class="disc-progress" id="disc-dots-wrap">
+      ${DISC_QUESTIONS.map((_, i) => `<div class="disc-prog-dot${i < idx ? ' done' : i === idx ? ' active' : ''}" id="ddot-${i}"></div>`).join('')}
+    </div>
+    <div class="q-card">
+      <div class="q-header">
+        <div class="q-badge" style="background:var(--gold);">D${String(idx + 1).padStart(2,'0')}</div>
+        <div class="q-meta">
+          <div class="q-type" style="color:var(--gold);">${q.type === 'situacional' ? 'Situação prática' : 'Preferência pessoal'}</div>
+          <div class="q-text">${q.text}</div>
+        </div>
+      </div>
+      <ul class="options-list">`;
+
+  q.options.forEach((opt, i) => {
+    const dimColors = { D: 'dot-d', I: 'dot-i', S: 'dot-s', C: 'dot-c' };
+    inner += `
+        <li class="pref-item">
+          <input type="radio" name="disc${idx}" id="dopt-${idx}-${i}" value="${opt.dim}">
+          <label for="dopt-${idx}-${i}">
+            <span class="pref-dot ${dimColors[opt.dim]}"></span>
+            ${opt.text}
+          </label>
+        </li>`;
+  });
+
+  inner += `</ul></div>
+    <div class="btn-row">
+      ${idx > 0 ? `<button class="btn btn-secondary" onclick="discBack(${idx})">← Anterior</button>` : ''}
+      <button class="btn btn-primary" onclick="${isLast ? 'finishDisc()' : `discNext(${idx})`}">${isLast ? 'Iniciar teste técnico →' : 'Próxima →'}</button>
+    </div>`;
+
+  screen.innerHTML = inner;
+  document.querySelector('.wrap').appendChild(screen);
+}
+
+function updateDiscDots(active) {
+  DISC_QUESTIONS.forEach((_, i) => {
+    const d = document.getElementById(`ddot-${i}`);
+    if (d) d.className = 'disc-prog-dot' + (i < active ? ' done' : i === active ? ' active' : '');
+  });
+}
+
+function discNext(idx) {
+  const sel = document.querySelector(`input[name="disc${idx}"]:checked`);
+  if (!sel) { alert('Por favor, selecione uma opção antes de continuar.'); return; }
+  discAnswers[idx] = sel.value;
+  showDiscQuestion(idx + 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function discBack(idx) {
+  showDiscQuestion(idx - 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function finishDisc() {
+  const sel = document.querySelector(`input[name="disc${DISC_QUESTIONS.length - 1}"]:checked`);
+  if (!sel) { alert('Por favor, selecione uma opção antes de continuar.'); return; }
+  discAnswers[DISC_QUESTIONS.length - 1] = sel.value;
+  // Iniciar bloco técnico
+  initDots();
+  showQuestion(0);
+  document.getElementById('step-label').textContent = 'Questão 1 de ' + QUESTIONS.length;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function calcDiscProfile() {
+  const scores = { D: 0, I: 0, S: 0, C: 0 };
+  Object.values(discAnswers).forEach(dim => { if (scores[dim] !== undefined) scores[dim]++; });
+  const total = Object.values(scores).reduce((a, b) => a + b, 0) || 1;
+  const pct = {};
+  Object.keys(scores).forEach(k => pct[k] = Math.round((scores[k] / total) * 100));
+  // Perfil primário e secundário
+  const sorted = Object.entries(pct).sort((a, b) => b[1] - a[1]);
+  const primary = sorted[0][0];
+  const secondary = sorted[1][0];
+  return { scores, pct, primary, secondary, sorted };
+}
+
+const DISC_DESCRIPTIONS = {
+  D: { name: 'Dominância', desc: 'Orientado a resultados, direto, decisivo e competitivo. Age com rapidez e autonomia. Pode ser impaciente com processos lentos.' },
+  I: { name: 'Influência', desc: 'Comunicativo, entusiasta, persuasivo e orientado a pessoas. Cria conexões com facilidade. Pode ter dificuldade com tarefas repetitivas e solitárias.' },
+  S: { name: 'Estabilidade', desc: 'Paciente, confiável, colaborativo e consistente. Prefere ambientes previsíveis. Pode resistir a mudanças repentinas.' },
+  C: { name: 'Conformidade', desc: 'Analítico, preciso, sistemático e orientado à qualidade. Segue regras e processos com rigor. Pode ser excessivamente perfeccionista.' }
+};
+
+const DISC_FIT = {
+  I: { fit: 'Alto', color: '#22c55e', obs: 'Perfil I alto é o mais alinhado com a função — comunicação com agentes e suporte de campo.' },
+  C: { fit: 'Alto', color: '#22c55e', obs: 'Perfil C alto é muito positivo — rigor no POP, precisão nos dados e nas etapas do processo.' },
+  D: { fit: 'Moderado', color: '#f59e0b', obs: 'D moderado/alto é positivo para autonomia e resolução rápida. D muito dominante pode gerar dificuldade de follow-up paciente.' },
+  S: { fit: 'Atenção', color: '#E8401C', obs: 'S muito alto pode indicar dificuldade com a rotatividade e imprevisibilidade da operação. Avaliar com cuidado.' }
+};
 
 // ── INICIALIZAR DOTS ────────────────────────────────────────────────────────
 function initDots() {
@@ -771,8 +1129,8 @@ function startTest() {
   }
 
   candidateData = { nome, email, cidade, exp };
-  initDots();
-  showQuestion(0);
+  // Primeiro bloco: DISC comportamental
+  showDiscQuestion(0);
 }
 
 // ── RENDERIZAR QUESTÃO ────────────────────────────────────────────────────────
@@ -915,6 +1273,7 @@ async function submitTest() {
     showScreen('screen-thanks');
     document.getElementById('step-label').textContent = 'Concluído';
     updateDots(QUESTIONS.length);
+    document.getElementById('recruiter-gate').style.display = 'block';
 
   } catch(e) {
     evaluationResult = {
@@ -925,6 +1284,7 @@ async function submitTest() {
       questions: QUESTIONS
     };
     showScreen('screen-thanks');
+    document.getElementById('recruiter-gate').style.display = 'block';
   }
 }
 
@@ -986,7 +1346,7 @@ function fallbackEval() {
 
 // ── PIN ───────────────────────────────────────────────────────────────────────
 function checkPin() {
-  const pin = document.getElementById('pin-input').value.trim();
+  const pin = document.getElementById('pin-input').value.trim().toLowerCase();
   if (pin === RECRUITER_PIN) {
     renderResult();
     showScreen('screen-result');
@@ -1018,6 +1378,9 @@ function renderResult() {
   else if (ai.recomendacao?.includes('ressalvas')) verdictClass = 'potencial';
   else if (ai.recomendacao?.includes('Não')) verdictClass = 'reprovado';
 
+  // Calcular DISC
+  const disc = calcDiscProfile();
+
   let html = `
     <div class="result-header">
       <div class="result-eyebrow">Resultado · Avaliação JET Brasil</div>
@@ -1032,6 +1395,46 @@ function renderResult() {
 
     <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:#8A837A;margin-bottom:14px;">Múltipla escolha — ${mc.correct}/${mc.total} corretas</div>
   `;
+
+
+  // DISC Chart
+  const discColors = { D: '#E8401C', I: '#F59E0B', S: '#22C55E', C: '#3B82F6' };
+  html += `<div class="disc-chart">
+    <div class="disc-chart-title">Perfil Comportamental DISC</div>
+    <div class="disc-bars">`;
+  ['D','I','S','C'].forEach(dim => {
+    const pctVal = disc.pct[dim];
+    const heightPx = Math.round((pctVal / 100) * 120);
+    html += `
+      <div class="disc-bar-col bar-col-${dim.toLowerCase()}">
+        <div class="disc-bar-pct">${pctVal}%</div>
+        <div class="disc-bar-visual" style="height:${heightPx}px"></div>
+        <div class="disc-bar-label label-${dim.toLowerCase()}">${dim}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;">${DISC_DESCRIPTIONS[dim].name}</div>
+      </div>`;
+  });
+  html += `</div>
+    <div class="disc-profile-line">
+      <strong>Perfil primário: ${disc.primary} — ${DISC_DESCRIPTIONS[disc.primary].name}</strong> · ${DISC_DESCRIPTIONS[disc.primary].desc}<br><br>
+      <strong>Perfil secundário: ${disc.secondary} — ${DISC_DESCRIPTIONS[disc.secondary].name}</strong> · ${DISC_DESCRIPTIONS[disc.secondary].desc}
+    </div>
+  </div>`;
+
+  // Adequação ao cargo
+  const fitPrimary = DISC_FIT[disc.primary];
+  const fitSecondary = DISC_FIT[disc.secondary];
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+    <div class="analysis-block">
+      <div class="analysis-q">Adequação ao cargo — Perfil ${disc.primary}</div>
+      <div style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;background:${fitPrimary.color}22;color:${fitPrimary.color};border:1px solid ${fitPrimary.color}44;margin-bottom:8px;">${fitPrimary.fit}</div>
+      <div class="analysis-eval">${fitPrimary.obs}</div>
+    </div>
+    <div class="analysis-block">
+      <div class="analysis-q">Adequação ao cargo — Perfil ${disc.secondary}</div>
+      <div style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 10px;border-radius:20px;background:${fitSecondary.color}22;color:${fitSecondary.color};border:1px solid ${fitSecondary.color}44;margin-bottom:8px;">${fitSecondary.fit}</div>
+      <div class="analysis-eval">${fitSecondary.obs}</div>
+    </div>
+  </div>`;
 
   // MC detalhe
   html += `<div class="analysis-block" style="margin-bottom:24px;">`;
